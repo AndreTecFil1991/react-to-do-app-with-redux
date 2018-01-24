@@ -1,23 +1,15 @@
-import {  } from './Functions'
+import { moveNote, updateNoteState, updateBoardNotes } from './Functions'
 
 export default function reducer(state, action) {
   switch (action.type) {
-    //SearchComponent
-    case 'DO_SEARCH':
-      doSearch(action.search, state)
+    case 'MOVE_NOTE':
+      moveNote(action.search, state)
       return state
-    case 'RESET_SEARCH':
-      resetSearch(state)
+    case 'UPDATE_NOTE_STATE':
+      updateNoteState(state)
       return state
-    //ListComponent
-    case 'HANDLE_PRODUCT_VOTE':
-      handleProductVote(action.productID, action.voteType, state)
-      return state
-    case 'CHANGE_SORT':
-      changeSort(action.sortType, state)
-      return state
-    case 'FILL_SEARCH_STATE_INFO':
-      fillSearchStateInfo(state)
+    case 'UPDATE_BOARD_NOTES':
+      updateBoardNotes(action.productID, action.voteType, state)
       return state
     default:
       return state
