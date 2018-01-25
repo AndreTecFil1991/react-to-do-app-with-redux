@@ -95,7 +95,7 @@ class Board extends Component {
     return (
       <div className='board' id={this.props.board.id}>
         {notes}
-        {this.props.addButton ? button : null}
+        {this.props.board.addButton ? button : null}
       </div>
     )
   }

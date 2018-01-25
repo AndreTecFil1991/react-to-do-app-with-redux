@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { createStore } from 'redux'
 
 import reducer from '../reducer'
@@ -32,7 +32,11 @@ const initialState = {
 
 export const store = createStore(reducer, initialState);
 
-class App extends React.Component {
+class App extends Component {
+  componentDidMount() {
+    store.subscribe(() => this.forceUpdate());
+  }
+
   render() {
     return (
       <div className='main-content'>
