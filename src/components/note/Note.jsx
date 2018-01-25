@@ -8,6 +8,7 @@ import {
   NoteMeasure,
   randomBetween
 } from '../../js/Calculations.js'
+import { store } from '../../app/App'
 
 class Note extends Component {
   edit() {
@@ -27,6 +28,11 @@ class Note extends Component {
   }
 
   checked() {
+    store.dispatch({
+      type: 'ON_CHECK',
+      index: this.props.index,
+      boardName: this.props.boardName
+    })
     if (this.props.onCheck)
       this.props.onCheck(this.props.index, this.props.children);
   }

@@ -6,13 +6,12 @@ import reducer from '../reducer'
 import './App.css'
 import BoardContainer from '../components/boardcontainer/BoardContainer'
 
-import Tasks from '../js/Mockdata.js'
+import Notes from '../js/Mockdata.js'
 
 const initialState = {
   boards: [
     {
-      notes: Tasks,
-      count: Tasks.length,
+      notes: Notes,
       addButton: true,
       name: 'leftBoard',
       id: 'left-container',
@@ -21,7 +20,6 @@ const initialState = {
       className: 'left-board'
     }, {
       notes: [],
-      count: 0,
       addButton: false,
       name: 'rightBoard',
       id: 'right-container',
@@ -29,8 +27,7 @@ const initialState = {
       titleClassId: 'right-container-title',
       className: 'right-board'
     }
-  ],
-  tasks: Tasks
+  ]
 }
 
 export const store = createStore(reducer, initialState);

@@ -1,67 +1,88 @@
-export function moveNote(note, state) {
-    this.state.rightBoardNotes.push(note);
-    this.setState({
-        leftBoardNotes: this.state.leftBoardNotes,
-        rightBoardNotes: this.state.rightBoardNotes
-    });
-}
+export function changeNoteEditionState(noteId, boardName, state) {
+    let localState = state
+    const boardIndex = getBoardIndex(boardName)
+    let boardNotes = localState.boards[boardIndex].notes
 
-export function updateNoteState(noteId, state) {
-    let leftBoardNotes = this.state.leftBoardNotes;
-    leftBoardNotes.find(item => {
-        if (item.id === noteId) {
-            item.editing = state;
+    boardNotes.find(note => {
+        if (note.id === noteId) {
+            note.editing = state;
         }
-        return item.id === noteId;
-    });
+        return note.id === noteId;
+    })
 
-    this.setState({
-        leftBoardNotes: leftBoardNotes,
-        rightBoardNotes: this.state.rightBoardNotes
-    });
+    Object.assign({}, state, localState)
 }
 
 export function updateBoardNotes(notes, boardName, state) {
-    this.setState({
-        leftBoardNotes:
-            boardName === 'leftBoard' ? notes : this.state.leftBoardNotes,
-        rightBoardNotes:
-            boardName === 'rightBoard' ? notes : this.state.rightBoardNotes
-    });
+    let localState = state
+    const boardIndex = getBoardIndex(boardName)
+
+    localState.boards[boardIndex].notes = notes
+
+    Object.assign({}, state, localState)
 }
 
 
-//NOTES
+// AUX FUNCTIONS #####################################################################################################
+function getOtherBoardIndex(boardName, state) {
+    let boards = state.boards
+    const otherBoardIndex = boards.findIndex(board => {
+        return board.boardName !== boardName
+    })
 
-export function add(note, editing = false, state) {
-    let notes = this.props.notes;
-    let newNote = {
-      id: this.nextId(),
-      note,
-      board: this.props.name,
-      editing
-    };
-    notes.push(newNote);
+    return otherBoardIndex
+}
 
-    this.props.updateBoardNotes(notes, this.props.name);
-  }
+function getBoardIndex(boardName, state) {
+    let boards = state.boards
+    const boardIndex = boards.findIndex(board => {
+        return board.boardName === boardName
+    })
 
-  export function update(newText, index, state) {
-    var notes = this.props.notes;
+    return boardIndex
+}
+//####################################################################################################################
+
+export function updateNote(boardName, newText, index, state) {
+    let localState = state
+    const boardIndex = getBoardIndex(boardName)
+
+    let notes = localState.boards[boardIndex].notes
     notes[index].note = newText;
 
-    this.props.updateBoardNotes(notes, this.props.name);
-  }
+    Object.assign({}, state, localState)
+}
 
-  export function remove(index, state) {
-    this.props.notes.splice(index, 1)
-    this.props.updateBoardNotes(
-      this.props.notes,
-      this.props.name
-    );
-  }
+export function removeNote(boardName, index, state) {
+    let localState = state
+    const boardIndex = getBoardIndex(boardName, state)
+    let notes = state.boards[boardIndex]
+    notes.splice(index, 1)
 
-  export function onCheck(index, state) {
-    let note = this.props.notes.splice(index, 1)[0];
-    this.props.movenote(note, this);
-  }
+    Object.assign({}, state, localState)
+}
+
+export function checkNote(index, boardName, state) {
+    let localState = state
+    //origin board
+    const boardIndex = getBoardIndex(boardName)
+    let notes = state.boards[boardIndex].notes
+    //splice note from origin board
+    const note = notes.splice(index, 1)[0];
+
+    //destiny board
+    const otherBoardIndex = getOtherBoardIndex(boardName)
+    //push board to destiny board
+    localState.boards[otherBoardIndex].notes.push(note)
+
+    Object.assign({}, state, localState)
+}
+
+export function addNote(boardName, note, state) {
+    let localState = state
+    const boardIndex = getBoardIndex(boardName)
+
+    localState.boards[boardIndex].notes.push(note)
+
+    Object.assign({}, state, localState)
+}

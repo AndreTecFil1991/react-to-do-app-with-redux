@@ -1,27 +1,31 @@
-import { moveNote, updateNoteState, updateBoardNotes, add, update, remove, onCheck } from './Functions'
+import {
+  changeNoteEditionState,
+  updateBoardNotes,
+  updateNote,
+  removeNote,
+  checkNote,
+  addNote
+} from './Functions'
 
 export default function reducer(state, action) {
   switch (action.type) {
-    case 'MOVE_NOTE':
-      moveNote(action.search, state)
-      return state
-    case 'UPDATE_NOTE_STATE':
-      updateNoteState(state)
+    case 'CHANGE_NOTE_EDITION_STATE':
+      changeNoteEditionState(action.noteId, action.boardName, state)
       return state
     case 'UPDATE_BOARD_NOTES':
-      updateBoardNotes(action.productID, action.voteType, state)
+      updateBoardNotes(action.notes, action.boardName, state)
       return state
-    case 'ADD':
-      add(action.note, action.editing, state)
+    case 'ADD_NOTE':
+      addNote(action.boardName, action.note, state)
       return state
-    case 'UPDATE':
-      update(action.newText, action.index, state)
+    case 'UPDATE_NOTE':
+      updateNote(action.boardName, action.newText, action.index, state)
       return state
-    case 'REMOVE':
-      remove(action.index, state)
+    case 'REMOVE_NOTE':
+      removeNote(action.boardName, action.index, state)
       return state
-    case 'ON_CHECK':
-      onCheck(action.index, state)
+    case 'CHECK_NOTE':
+      checkNote(action.index, action.boardName, state)
       return state
     default:
       return state
