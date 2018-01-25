@@ -29,3 +29,39 @@ export function updateBoardNotes(notes, boardName, state) {
             boardName === 'rightBoard' ? notes : this.state.rightBoardNotes
     });
 }
+
+
+//NOTES
+
+export function add(note, editing = false, state) {
+    let notes = this.props.notes;
+    let newNote = {
+      id: this.nextId(),
+      note,
+      board: this.props.name,
+      editing
+    };
+    notes.push(newNote);
+
+    this.props.updateBoardNotes(notes, this.props.name);
+  }
+
+  export function update(newText, index, state) {
+    var notes = this.props.notes;
+    notes[index].note = newText;
+
+    this.props.updateBoardNotes(notes, this.props.name);
+  }
+
+  export function remove(index, state) {
+    this.props.notes.splice(index, 1)
+    this.props.updateBoardNotes(
+      this.props.notes,
+      this.props.name
+    );
+  }
+
+  export function onCheck(index, state) {
+    let note = this.props.notes.splice(index, 1)[0];
+    this.props.movenote(note, this);
+  }

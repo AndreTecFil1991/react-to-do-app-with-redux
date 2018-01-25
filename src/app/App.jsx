@@ -6,7 +6,7 @@ import reducer from '../reducer'
 import './App.css'
 import BoardContainer from '../components/boardcontainer/BoardContainer'
 
-import Tasks from '../../js/Mockdata'
+import Tasks from '../js/Mockdata.js'
 
 const initialState = {
   boards: [

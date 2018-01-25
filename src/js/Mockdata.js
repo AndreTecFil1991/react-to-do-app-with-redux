@@ -1,4 +1,4 @@
-export default Tasks = [
+const Tasks = [
     "Clean the house",
     "Do the laundry",
     "Fill the fridge",
@@ -7,4 +7,6 @@ export default Tasks = [
     "Clean the car",
     "Update the pcs!",
     "Hide the PS4"
-  ];
+  ]
+
+  export default Tasks

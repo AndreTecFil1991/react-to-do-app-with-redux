@@ -1,57 +1,47 @@
-import React from "react";
-import Note from "../note/Note.jsx";
+import React, { Component } from 'react'
+import { store } from '../../app/App'
+import Note from '../note/Note'
 
-class Board extends React.Component {
-  constructor(props) {
-    super(props);
-    this.onCheck = this.onCheck.bind(this);
-    this.remove = this.remove.bind(this);
-    this.update = this.update.bind(this);
-    this.mapNotes = this.mapNotes.bind(this);
-  }
-
+class Board extends Component {
   nextId() {
     this.uniqueId = this.uniqueId || 0;
     return this.uniqueId++;
   }
 
-  add(note, editing=false) {
-    let notes = this.props.notes;
-    let newNote = {
-      id: this.nextId(),
-      note,
-      board: this.props.name,
-      editing
-    };
-    notes.push(newNote);
-
-    this.props.updateBoardNotes(notes, this.props.name);
+  add(note, editing = false) {
+    store.dispatch({
+      type: 'ADD',
+      note: note,
+      editing: editing
+    })
   }
 
   update(newText, index) {
-    var notes = this.props.notes;
-    notes[index].note = newText;
-
-    this.props.updateBoardNotes(notes, this.props.name);
+    store.dispatch({
+      type: 'UPDATE',
+      newText: newText,
+      index: index
+    })
   }
 
   remove(index) {
-    this.props.notes.splice(index, 1)
-    this.props.updateBoardNotes(
-      this.props.notes,
-      this.props.name
-    );
+    store.dispatch({
+      type: 'REMOVE',
+      index: index
+    })
   }
 
   onCheck(index) {
-    let note = this.props.notes.splice(index, 1)[0];
-    this.props.movenote(note, this);
+    store.dispatch({
+      type: 'ON_CHECK',
+      index: index
+    })
   }
 
   componentDidMount() {
     var self = this;
     if (this.props.count) {
-      this.props.tasks.forEach(function(task) {
+      this.props.tasks.forEach(function (task) {
         self.add(task);
       });
     }
@@ -59,23 +49,19 @@ class Board extends React.Component {
 
   eachNote(note, index, scope) {
     let time = null;
-    if (scope.props.name === "rightBoard" && !note.time) {
+    if (scope.props.name === 'rightBoard' && !note.time) {
       let date = new Date();
       let minutes = date.getMinutes();
-      time = date.getHours() + ":" + (minutes < 10 ? "0" + minutes : minutes);
+      time = date.getHours() + ':' + (minutes < 10 ? '0' + minutes : minutes);
     }
-    
+
     return (
       <Note
         key={note.id}
         id={note.id}
         index={index}
-        onChange={scope.update}
-        onRemove={scope.remove}
-        onCheck={scope.onCheck}
         board={scope.props.name}
         time={time}
-        updateState={scope.props.updateNoteState}
         editing={note.editing}
       >
         {note.note}
@@ -88,31 +74,20 @@ class Board extends React.Component {
     return scope.props.notes.map((note, i) => scope.eachNote(note, i, scope));
   }
 
-  renderWithButtonToAdd() {
-    var notes = this.mapNotes();
-    return (
-      <div className="board" id={this.props.id}>
-        {notes}
-        <button
-          className="btn btn-sm btn-success glyphicon glyphicon-plus"
-          onClick={this.add.bind(this, "New Note", true)}
-        />
-      </div>
-    );
-  }
-
-  renderWithoutButtonToAdd() {
-    let notes = this.mapNotes();
-    return (
-      <div className="board" id={this.props.id}>
-        {notes}
-      </div>
-    );
-  }
-
   render() {
-    if (this.props.addButton) return this.renderWithButtonToAdd();
-    else return this.renderWithoutButtonToAdd();
+    const button = <button
+      className='btn btn-sm btn-success glyphicon glyphicon-plus'
+      onClick={this.add.bind(this, 'New Note', true)}
+    />;
+
+    var notes = this.mapNotes();
+
+    return (
+      <div className='board' id={this.props.id}>
+        {notes}
+        {this.props.addButton ? button : null}
+      </div>
+    )
   }
 }
 

@@ -1,15 +1,15 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import Draggable from "react-draggable";
-import "./Glyphicon.css"
-import "./Note.css";
+import React, { Component } from 'react'
+import ReactDOM from 'react-dom'
+import Draggable from 'react-draggable'
+import './Glyphicon.css'
+import './Note.css'
 import {
   retrieveBoardDimensions,
   NoteMeasure,
   randomBetween
-} from "../js/Calculations.js";
+} from '../../js/Calculations.js'
 
-class Note extends React.Component {
+class Note extends Component {
   edit() {
     this.props.updateState(this.props.id, true);
   }
@@ -38,22 +38,22 @@ class Note extends React.Component {
         randomBetween(
           boardDimensions.width.start,
           boardDimensions.width.end - NoteMeasure
-        ) + "px",
+        ) + 'px',
       top:
         randomBetween(
           boardDimensions.height.start,
           boardDimensions.height.end - NoteMeasure
-        ) + "px"
+        ) + 'px'
     };
   }
 
   renderDisplay() {
-    let visibilityControl = "visible";
+    let visibilityControl = 'visible';
 
-    if (this.props.board === "rightBoard") visibilityControl = "hidden";
+    if (this.props.board === 'rightBoard') visibilityControl = 'hidden';
     return (
       <Draggable>
-        <div className="note" style={this.style}>
+        <div className='note' style={this.style}>
           <p>
             {this.props.children}
             <br />
@@ -62,17 +62,17 @@ class Note extends React.Component {
           <span>
             <button
               onClick={this.checked.bind(this)}
-              className="btn btn-sm btn-success glyphicon glyphicon-ok"
+              className='btn btn-sm btn-success glyphicon glyphicon-ok'
               style={{ visibility: visibilityControl }}
             />
             <button
               onClick={this.edit.bind(this)}
-              className="btn btn-sm btn-primary glyphicon glyphicon-pencil"
+              className='btn btn-sm btn-primary glyphicon glyphicon-pencil'
               style={{ visibility: visibilityControl }}
             />
             <button
               onClick={this.remove.bind(this)}
-              className="btn btn-sm btn-danger glyphicon glyphicon-trash"
+              className='btn btn-sm btn-danger glyphicon glyphicon-trash'
             />
           </span>
         </div>
@@ -82,15 +82,15 @@ class Note extends React.Component {
 
   renderForm() {
     return (
-      <div className="note" style={this.style}>
+      <div className='note' style={this.style}>
         <textarea
-          ref="newText"
+          ref='newText'
           defaultValue={this.props.children}
-          className="form-control"
+          className='form-control'
         />
         <button
           onClick={this.save.bind(this)}
-          className="btn btn-sm btn-success glyphicon glyphicon-floppy-disk"
+          className='btn btn-sm btn-success glyphicon glyphicon-floppy-disk'
         />
       </div>
     );
