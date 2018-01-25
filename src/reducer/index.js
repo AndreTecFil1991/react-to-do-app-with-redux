@@ -22,10 +22,10 @@ export default function reducer(state, action) {
       updateNote(action.boardName, action.newText, action.index, state)
       return state
     case 'REMOVE_NOTE':
-      removeNote(action.boardName, action.index, state)
+      removeNote(action.boardName, action.id, state)
       return state
     case 'CHECK_NOTE':
-      checkNote(action.index, action.boardName, state)
+      checkNote(action.id, action.boardName, state)
       return state
     default:
       return state

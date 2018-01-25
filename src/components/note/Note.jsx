@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import ReactDOM from 'react-dom'
 import Draggable from 'react-draggable'
 import './Glyphicon.css'
 import './Note.css'
@@ -12,29 +11,35 @@ import { store } from '../../app/App'
 
 class Note extends Component {
   edit() {
-    this.props.updateState(this.props.id, true);
+    store.dispatch({
+      type: 'CHANGE_NOTE_EDITION_STATE',
+      noteId: this.props.id,
+      boardName: this.props.board
+    })
   }
 
   save() {
-    this.props.onChange(
-      ReactDOM.findDOMNode(this.refs.newText).value,
-      this.props.index
-    );
-    this.props.updateState(this.props.id, false);
+    store.dispatch({
+      type: 'UPDATE_NOTE',
+      noteId: this.props.id,
+      boardName: this.props.board
+    })
   }
 
   remove() {
-    if (this.props.onRemove) this.props.onRemove(this.props.index);
+    store.dispatch({
+      type: 'REMOVE_NOTE',
+      noteId: this.props.id,
+      boardName: this.props.board
+    })
   }
 
   checked() {
     store.dispatch({
-      type: 'ON_CHECK',
-      index: this.props.index,
-      boardName: this.props.boardName
+      type: 'CHECK_NOTE',
+      id: this.props.id,
+      boardName: this.props.board
     })
-    if (this.props.onCheck)
-      this.props.onCheck(this.props.index, this.props.children);
   }
 
   componentWillMount() {

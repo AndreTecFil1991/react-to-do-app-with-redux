@@ -59,6 +59,7 @@ class Board extends Component {
   }
 
   getNotes(board) {
+    this.higherId = 0;
     const notes = board.notes.map(note => {
       let time = null;
       if (board.name === 'rightBoard' && !note.time) {
@@ -71,8 +72,8 @@ class Board extends Component {
         <Note
           time={time}
           key={note.id}
-          id={note.id}
-          board={note.name}
+          id={this.higherId++}
+          board={note.board}
           editing={note.editing}
         >
           {note.text}
