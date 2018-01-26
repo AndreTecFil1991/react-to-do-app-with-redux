@@ -3,15 +3,6 @@ import Board from '../board/Board'
 import { store } from '../../app/App'
 
 class BoardContainer extends Component {
-
-  updateNoteState(noteId, boardName) {
-    store.dispatch({
-      type: 'UPDATE_NOTE_STATE',
-      noteId: noteId,
-      boardName: boardName
-    })
-  }
-
   render() {
     const state = store.getState();
     const boards = state.boards.map(board =>

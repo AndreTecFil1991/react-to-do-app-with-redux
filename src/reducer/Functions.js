@@ -61,7 +61,7 @@ export function updateNote(boardName, newText, id, state) {
 export function removeNote(boardName, id, state) {
     let localState = state
     const boardIndex = getBoardIndex(boardName, state)
-    let notes = state.boards[boardIndex]
+    let notes = state.boards[boardIndex].notes
     const index = notes.findIndex(note => {
         return note.id === id
     })
@@ -74,7 +74,6 @@ export function checkNote(id, boardName, state) {
     let localState = state
     //origin board
     const boardIndex = getBoardIndex(boardName, state)
-    console.log(boardIndex)
     let notes = localState.boards[boardIndex].notes
     //splice note from origin board
     const index = notes.findIndex(note => {
@@ -84,8 +83,6 @@ export function checkNote(id, boardName, state) {
 
     //destiny board
     const otherBoardIndex = getOtherBoardIndex(boardName, state)
-    console.log(otherBoardIndex)
-    console.log(localState.boards)
     //push board to destiny board
     localState.boards[otherBoardIndex].notes.push(note)
 

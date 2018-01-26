@@ -21,6 +21,7 @@ class Note extends Component {
   save() {
     store.dispatch({
       type: 'UPDATE_NOTE',
+      newText: this.refs.newText.value,
       noteId: this.props.id,
       boardName: this.props.board
     })

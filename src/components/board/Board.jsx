@@ -75,6 +75,7 @@ class Board extends Component {
           id={this.higherId++}
           board={board.name}
           editing={note.editing}
+          style=''
         >
           {note.text}
         </Note>
@@ -82,6 +83,10 @@ class Board extends Component {
     })
 
     return notes
+  }
+
+  componentDidMount(){
+    console.log('stop')
   }
 
   render() {
