@@ -73,7 +73,7 @@ class Board extends Component {
           time={time}
           key={note.id}
           id={this.higherId++}
-          board={note.board}
+          board={board.name}
           editing={note.editing}
         >
           {note.text}

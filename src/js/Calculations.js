@@ -1,16 +1,16 @@
 const Boards = Object.freeze({
-  LEFTBOARD: "leftBoard",
-  RIGHTBOARD: "rightBoard"
+  LEFTBOARD: 'leftBoard',
+  RIGHTBOARD: 'rightBoard'
 });
 
 export function retrieveBoardDimensions(board) {
-  var leftContainer = document.getElementById("left-container");
-  var rightContainer = document.getElementById("right-container");
+  var leftContainer = document.getElementById('left-container');
+  var rightContainer = document.getElementById('right-container');
   var clientHeight = window.innerHeight;
   var clientWidth = window.innerWidth;
-  var pageHeader = document.getElementById("pageHeader");
+  var pageHeader = document.getElementById('pageHeader');
   var pageHeaderHeight = pageHeader ? pageHeader.clientHeight : 0;
-  var pageFooter = document.getElementById("pageFooter");
+  var pageFooter = document.getElementById('pageFooter');
   var pageFooterHeight = pageFooter ? pageFooter.clientHeight : 0;
   var containerDimensions = {
     width: {
@@ -27,14 +27,14 @@ export function retrieveBoardDimensions(board) {
   var containerTitleHeight = 0;
 
   if (board === Boards.LEFTBOARD && leftContainer) {
-    containerTitle = document.getElementById("left-container-title");
+    containerTitle = document.getElementById('left-container-title');
     containerTitleHeight = containerTitle ? containerTitle.clientHeight : 0;
 
     containerDimensions.width.end = leftContainer.clientWidth;
   }
 
   if (board === Boards.RIGHTBOARD && rightContainer) {
-    containerTitle = document.getElementById("right-container-title");
+    containerTitle = document.getElementById('right-container-title');
     containerTitleHeight = containerTitle ? containerTitle.clientHeight : 0;
 
     containerDimensions.width.start = clientWidth - rightContainer.clientWidth;
